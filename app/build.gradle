@@ -27,6 +27,7 @@ dependencies {
     final RX_VERSION = '1.1.0'
     final GSON_VERSION = '2.6.2'
     final BUTTERKNIFE_VERSION = '7.0.1'
+    final EVENTBUS_VERSION = '3.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile files('libs/universal-image-loader-1.9.5.jar')
@@ -40,4 +41,5 @@ dependencies {
     compile "io.reactivex:rxandroid:$RX_VERSION"
     compile "com.google.code.gson:gson:$GSON_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    compile "org.greenrobot:eventbus:$EVENTBUS_VERSION"
 }

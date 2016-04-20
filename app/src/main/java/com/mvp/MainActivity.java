@@ -1,43 +1,33 @@
 package com.mvp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.mvp.net.GithubUrl;
-import com.mvp.net.RetrofitFactory;
+import com.mvp.ui.login.LoginActivity;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        RetrofitFactory.getGithubSingleton().getGithubUrl()
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GithubUrl>() {
-                    @Override
-                    public void onCompleted() {
 
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
+    }
 
-                    }
+    @OnClick(R.id.login_home_btn)
+    void login(){
 
-                    @Override
-                    public void onNext(GithubUrl githubUrl) {
-                        Log.d("TAG", githubUrl.toString());
-                    }
-                });
+        Intent intent = new Intent(this, LoginActivity.class);
 
+        startActivity(intent);
     }
 }

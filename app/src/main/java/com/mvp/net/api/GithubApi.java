@@ -1,8 +1,9 @@
 package com.mvp.net.api;
 
-import com.mvp.net.GithubUrl;
+import com.mvp.net.UserInfo;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -10,6 +11,6 @@ import rx.Observable;
  */
 public interface GithubApi {
 
-    @GET("/")
-    Observable<GithubUrl> getGithubUrl();
+    @GET("/users/{username}")
+    Observable<UserInfo> getUserInfo(@Path("username") String username);
 }
