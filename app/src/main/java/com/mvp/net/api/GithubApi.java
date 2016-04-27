@@ -1,5 +1,6 @@
 package com.mvp.net.api;
 
+import com.mvp.net.RetrofitFactory;
 import com.mvp.net.UserInfo;
 
 import retrofit2.http.GET;

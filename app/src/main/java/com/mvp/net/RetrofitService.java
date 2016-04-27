@@ -4,6 +4,7 @@ import com.mvp.net.api.GithubApi;
 
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -14,30 +15,38 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitService {
 
-    public final GithubApi githubApi;
-
     private final static int DEFAULT_TIMEOUT = 5;
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-    private Retrofit retrofit;
+    private static Retrofit.Builder builder =
+            new Retrofit.Builder()
+                    .baseUrl(NetWorkConfig.HTTP_GITHUB)
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create());
 
     public RetrofitService(){
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
-        retrofit = new Retrofit.Builder()
-                .client(builder.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(NetWorkConfig.HTTP_GITHUB)
-                .build();
-
-        githubApi = retrofit.create(GithubApi.class);
+        httpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
     }
 
-    public GithubApi getGithubApi(){
+    public static <S> S createService(Class<S> serviceClass) {
+        return createService(serviceClass, null);
+    }
 
-        return githubApi;
+    public static <S> S createService(Class<S> serviceClass, final Interceptor interceptor) {
+
+        Retrofit retrofit ;
+
+        if (interceptor != null) {
+            //此处用于添加公共Header 信息
+            httpClient.interceptors().add(interceptor);
+        }
+
+        retrofit = builder.client(httpClient.build()).build();
+
+        return retrofit.create(serviceClass);
+
     }
 
 
