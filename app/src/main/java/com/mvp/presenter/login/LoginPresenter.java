@@ -3,8 +3,10 @@ package com.mvp.presenter.login;
 
 import android.util.Log;
 
+import com.mvp.net.RequestIntercept;
 import com.mvp.net.RetrofitFactory;
 import com.mvp.net.UserInfo;
+import com.mvp.net.api.GithubApi;
 import com.mvp.presenter.MvpBasePresenter;
 import com.mvp.ui.login.LoginView;
 
@@ -20,12 +22,13 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
 
 
 
-    public void doLogin(String username){
+    public void doLogin(String username) {
         if(isViewAttached()){
             getView().showLoading();
         }
 
-        RetrofitFactory.getGithubSingleton().getUserInfo(username)
+        GithubApi githubApi = (GithubApi) RetrofitFactory.getInstance(GithubApi.class);
+        githubApi.getUserInfo(username)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -37,7 +40,6 @@ public class LoginPresenter extends MvpBasePresenter<LoginView> {
 
                     @Override
                     public void onError(Throwable e) {
-
                         if(isViewAttached()){
                             getView().hideLoading();
                             getView().showError();
