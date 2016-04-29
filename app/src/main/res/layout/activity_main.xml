@@ -14,4 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login" />
+
+    <Button
+        android:id="@+id/following_get_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取following"
+        android:layout_below="@+id/login_home_btn"
+        />
 </RelativeLayout>
