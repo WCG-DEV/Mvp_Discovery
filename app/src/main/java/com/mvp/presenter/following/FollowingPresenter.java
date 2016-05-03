@@ -2,6 +2,7 @@ package com.mvp.presenter.following;
 
 import com.mvp.net.RetrofitFactory;
 import com.mvp.net.UserInfo;
+import com.mvp.net.api.GithubApi;
 import com.mvp.presenter.MvpBasePresenter;
 import com.mvp.ui.following.FollowingView;
 
@@ -14,20 +15,21 @@ import rx.schedulers.Schedulers;
 /**
  * Created by cfp on 16-4-29.
  */
-public class FollowingPresenter extends MvpBasePresenter<FollowingView>{
+public class FollowingPresenter extends MvpBasePresenter<FollowingView> {
 
 
     /**
      * 获取用户的Following
+     *
      * @param username
      */
-    public void getFollowing(String username){
+    public void getFollowing(String username) {
 
-        if(isViewAttached()){
+        if (isViewAttached()) {
             getView().showLoading(false);
         }
 
-        RetrofitFactory.getGithubSingleton().getFollowings(username)
+        RetrofitFactory.getInstance(GithubApi.class).getFollowings(username)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

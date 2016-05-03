@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.mvp.ui.following.FollowingActivity;
 import com.mvp.ui.login.LoginActivity;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //测试热修复
+        aPatchTest();
+
 
 
     }
@@ -53,5 +57,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FollowingActivity.class);
         startActivity(intent);
 
+    }
+
+    /**
+     * 热修复test
+     */
+    private void aPatchTest(){
+
+        Toast.makeText(MainActivity.this, "old",Toast.LENGTH_SHORT).show();
     }
 }
